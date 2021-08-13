@@ -17,7 +17,7 @@ class Url:
         html = requests.get(url).text
         dom = BeautifulSoup(html, 'html.parser')
 
-        if (YOUTUBE_URL_RE.match(self.url) != None):
+        if (YOUTUBE_URL_RE.match(url) != None):
             self.scrapper = YoutubeScrapper(dom)
 
     @staticmethod
