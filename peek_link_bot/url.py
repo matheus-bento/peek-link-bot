@@ -16,18 +16,18 @@ class Url:
     def __init__(self, url):
         html = requests.get(url).text
         dom = BeautifulSoup(html, 'html.parser')
-
+        
         if (YOUTUBE_URL_RE.match(url) != None):
             self.scrapper = YoutubeScrapper(dom)
 
     @staticmethod
     def extract(comment):
-        matches = URL_RE.findall(comment)
-        return matches
+        # reddit returns an escaped comment string
+        # we need to remove those backslashes in order
+        # to get the actual URLs
+        comment = comment.replace('\\', '')
+        
+        return URL_RE.findall(comment)
 
     def get_data(self):
         return self.scrapper.get_data()
-
-        # TODO: add a switch to test if the given url is from a well-known
-        #       website in order to use its specific scrapper class
-        

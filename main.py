@@ -10,7 +10,7 @@ def main():
             urls = Url.extract(parent.body)
 
             for mentioned_url in urls:
-                Url(mentioned_url).get_data()
+                print(Url(mentioned_url).get_data())
                 pass
 
 if __name__ == "__main__":
