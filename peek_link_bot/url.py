@@ -1,6 +1,4 @@
 import re
-
-import re
 import requests
 from bs4 import BeautifulSoup
 
@@ -12,7 +10,6 @@ URL_RE = re.compile(r'(?:https?:\/\/.)?(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.
 YOUTUBE_URL_RE = re.compile(r'(?:http|https)://(?:(?:(?:www\.)?youtube.com)|youtu.be)(?:[/\w]*(?:\?(?:[\w\-_]+=[\w\-_]+)*)?)')
 
 class Url:
-
     def __init__(self, url):
         html = requests.get(url).text
         dom = BeautifulSoup(html, 'html.parser')
@@ -26,8 +23,7 @@ class Url:
         # we need to remove those backslashes in order
         # to get the actual URLs
         comment = comment.replace('\\', '')
-        
         return URL_RE.findall(comment)
 
-    def get_data(self):
-        return self.scrapper.get_data()
+    def get_info(self):
+        return self.scrapper.get_info()
