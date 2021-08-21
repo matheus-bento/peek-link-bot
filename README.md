@@ -5,7 +5,7 @@ A reddit bot that gives a preview of a parent comment's linked URLs so you don't
 ## Dependencies
 
 ``` bash
-    pip install beautifulsoup4 praw
+    pip install beautifulsoup4 praw sqlalchemy
 ```
 
 ## Running the code
