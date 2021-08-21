@@ -2,8 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from peek_link_bot.db.model.base import Base
-from peek_link_bot.db.model.comments import Comments
-from peek_link_bot.db.model.errors import Errors
+from peek_link_bot.db.model.comment import Comment
+from peek_link_bot.db.model.error import Error
 
 class Database:
     def __init__(self, path):

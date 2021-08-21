@@ -2,7 +2,7 @@ from peek_link_bot.db.model.base import Base
 from sqlalchemy import Column, Text, Integer
 from datetime import datetime, timezone
 
-class Errors(Base):
+class Error(Base):
     __tablename__ = 'errors'
 
     comment_id = Column(Text, primary_key=True, nullable=False)
