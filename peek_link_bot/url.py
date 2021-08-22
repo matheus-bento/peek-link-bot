@@ -16,6 +16,8 @@ class Url:
         
         if (YOUTUBE_URL_RE.match(url) != None):
             self.scrapper = YoutubeScrapper(dom)
+        else:
+            raise Exception("There are no scrappers to extract data from " + url)
 
     @staticmethod
     def extract(comment):

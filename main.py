@@ -1,7 +1,11 @@
 import praw
+from datetime import datetime, timezone
 
 from peek_link_bot.url import Url
 from peek_link_bot.db.database import Database
+
+from peek_link_bot.db.model.comment import Comment
+from peek_link_bot.db.model.error import Error
 
 def main():
     reddit = praw.Reddit("peek-link-bot",)
@@ -14,8 +18,26 @@ def main():
             parent = reddit.comment(item.parent_id.split("_")[1])
             urls = Url.extract(parent.body)
 
-            for mentioned_url in urls:
-                print(Url(mentioned_url).get_info())
+            with db.get_session() as session:
+                for mentioned_url in urls:
+                    if session.query(Comment).filter(Comment.comment_id==item.id).first() is None:
+                        try:
+                            url_info = Url(mentioned_url).get_info()
+                            item.reply(url_info)
+
+                            comment = Comment(comment_id=item.id,
+                                              created_utc=int(item.created_utc),
+                                              replied_utc=int(datetime.now(timezone.utc).timestamp()))
+
+                            session.add(comment)
+                        except Exception as exception:
+                            error = Error(comment_id=item.id,
+                                          message=str(exception),
+                                          error_utc=int(datetime.now(timezone.utc).timestamp()))
+
+                            session.add(error)
+                session.commit()
+
 
 if __name__ == "__main__":
     main()
