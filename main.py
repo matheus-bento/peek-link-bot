@@ -20,7 +20,10 @@ def main():
 
             with db.get_session() as session:
                 for mentioned_url in urls:
-                    if session.query(Comment).filter(Comment.comment_id==item.id).first() is None:
+                    comment_replied = session.query(Comment).filter(Comment.comment_id==item.id).first() is not None
+                    comment_error = session.query(Error).filter(Error.comment_id==item.id).first() is not None
+
+                    if not comment_replied and not comment_error:
                         try:
                             url_info = Url(mentioned_url).get_info()
                             item.reply(url_info)
