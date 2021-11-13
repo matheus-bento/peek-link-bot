@@ -17,10 +17,13 @@ def main():
             urls = Url.extract(parent.body)
 
             for mentioned_url in urls:
-                url_info = Url(mentioned_url).get_info()
-            
-                notification.reply(url_info)
-                notification.mark_read()
+                try:
+                    url_info = Url(mentioned_url).get_info()
+                    notification.reply(url_info)
+                except Exception as e:
+                    print("comment ID: " + notification.id + "context: " + notification.context + "error: " + e)
+                finally:
+                    notification.mark_read()
 
 if __name__ == "__main__":
     main()
