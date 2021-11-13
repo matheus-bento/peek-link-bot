@@ -11,8 +11,6 @@ def main():
         password=os.getenv("REDDIT_PASSWORD")
     )
 
-    reddit.inbox.mark_unread(list(reddit.inbox.all()))
-
     for notification in reddit.inbox.stream():
         if notification.type == "username_mention" and not notification.is_root:
             parent = reddit.comment(notification.parent_id.split("_")[1])
@@ -23,8 +21,6 @@ def main():
             
                 notification.reply(url_info)
                 notification.mark_read()
-
-
 
 if __name__ == "__main__":
     main()
