@@ -1,5 +1,7 @@
-import praw
+import os
 from datetime import datetime, timezone
+
+import praw
 
 from peek_link_bot.url import Url
 from peek_link_bot.db.database import Database
@@ -8,7 +10,13 @@ from peek_link_bot.db.model.comment import Comment
 from peek_link_bot.db.model.error import Error
 
 def main():
-    reddit = praw.Reddit("peek-link-bot",)
+    reddit = praw.Reddit(
+        user_agent="Peek Link Bot",
+        client_id=os.getenv("CLIENT_ID"),
+        client_secret=os.getenv("CLIENT_SECRET"),
+        username=os.getenv("REDDIT_USERNAME"),
+        password=os.getenv("REDDIT_PASSWORD")
+    )
 
     db = Database("sqlite:///peek_link_bot/db/comments.sqlite")
     db.generate()
