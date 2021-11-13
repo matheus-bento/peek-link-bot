@@ -21,7 +21,7 @@ def main():
                     url_info = Url(mentioned_url).get_info()
                     notification.reply(url_info)
                 except Exception as e:
-                    print("comment ID: " + notification.id + "context: " + notification.context + "error: " + e)
+                    print("comment ID: " + notification.id + "context: " + notification.context + "error: " + str(e))
                 finally:
                     notification.mark_read()
 
