@@ -17,7 +17,6 @@ class YoutubeScrapper(Scrapper):
     def get_info(self):
         comment = ("# YouTube\n\n"
                    "## [{0}]({1}) - {2}\n\n"
-                   "---\n"
-                   "^(beep bop i'm /u/peek-link-bot, your friendly bot that checks links beforehand so you don't get bamboozled)")
+                   "---")
 
         return comment.format(self.data["title"], self.data["video_url"], self.data["channel_name"])
