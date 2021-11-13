@@ -11,7 +11,7 @@ def main():
         password=os.getenv("REDDIT_PASSWORD")
     )
 
-    for notification in reddit.inbox.stream():
+    for notification in reddit.inbox.unread():
         if notification.type == "username_mention" and not notification.is_root:
             parent = reddit.comment(notification.parent_id.split("_")[1])
             urls = Url.extract(parent.body)
