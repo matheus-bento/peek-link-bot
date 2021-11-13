@@ -1,5 +1,7 @@
-import os, sys
+import os
 import praw
+
+from peek_link_bot.log import LoggingLevel, log
 from peek_link_bot.url import Url
 
 def main():
@@ -20,8 +22,14 @@ def main():
                 try:
                     url_info = Url(mentioned_url).get_info()
                     notification.reply(url_info)
+
+                    log("Comment ID: " + notification.id + " " +
+                        "Permalink: https://reddit.com" + notification.context + " " +
+                        "Comment answered successfully", LoggingLevel.INFO)
                 except Exception as e:
-                    print("comment ID: " + notification.id + "context: " + notification.context + "error: " + str(e))
+                    log("Comment ID: " + notification.id + " " +
+                        "Permalink: https://reddit.com" + notification.context + " " +
+                        "Error: '" + str(e) + "'", LoggingLevel.ERROR)
                 finally:
                     notification.mark_read()
 
